@@ -8,6 +8,7 @@ dependencies = [
     "clang>=21.1.7",
     "libclang>=18.1.1",
     "networkx>=3.6.1",
+    "tqdm>=4.67.3",
 ]
 
 [dependency-groups]

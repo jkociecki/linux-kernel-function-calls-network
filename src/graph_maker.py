@@ -1,5 +1,6 @@
 import clang.cindex
 import csv
+from tqdm import tqdm
 from pathlib import Path
 from dataclasses import dataclass, asdict
 
@@ -76,10 +77,9 @@ def find_calls(cursor, caller_usr="global"):
 
 
 if __name__ == "__main__":
-
     data = Path(__file__).resolve().parent.parent / "data"
     linux_dir = data / "linux"
-    target_dir = linux_dir / "fs" / "fat"
+    target_dir = linux_dir
 
     files = find_source_files(target_dir, {".c"})
 
@@ -92,7 +92,7 @@ if __name__ == "__main__":
 
     index = clang.cindex.Index.create()
 
-    for file in files:
+    for file in tqdm(files, desc="Processing files"):
         tu = index.parse(str(file), args=clang_args)
         find_calls(tu.cursor)
 
