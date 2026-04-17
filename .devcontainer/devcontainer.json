@@ -1,0 +1,25 @@
+{
+  "name": "complex-networks-project",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+"postCreateCommand": [
+    "bash", "-c",
+    "uv sync --all-groups && \
+     mkdir -p data && \
+     git clone --depth 1 https://github.com/mit-pdos/xv6-public.git data/xv6 || true && \
+     rm -rf data/xv6/.git && \
+     git clone --depth 1 https://github.com/torvalds/linux.git data/linux || true && \
+     rm -rf data/linux/.git"
+     "
+  ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "GitHub.copilot-chat",
+        "ms-toolsai.datawrangler"
+      ]
+    }
+  }
+}
