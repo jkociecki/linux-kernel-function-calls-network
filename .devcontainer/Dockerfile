@@ -10,6 +10,6 @@ RUN apt-get update && apt-get install -y \
     libclang-dev \
     && rm -rf /var/lib/apt/lists/*
 
-RUN sudo apt-get install -y flex bison libssl-dev libelf-dev bc gcc make
+RUN apt-get update && apt-get install -y flex bison libssl-dev libelf-dev bc gcc make
 
 RUN curl -LsSf https://astral.sh/uv/install.sh | env UV_INSTALL_DIR="/usr/local/bin" UV_NO_MODIFY_PATH=1 sh
