@@ -14,9 +14,10 @@ dependencies = [
     "seaborn>=0.13",
     "scipy>=1.11",
     "scikit-learn>=1.3",
-    "networkit>=11.0",
     "ipykernel>=6.0",
     "jupyter>=1.0",
+    "numpy>=2.4.4",
+    "networkit>=11.2.1",
 ]
 
 [dependency-groups]
