@@ -9,4 +9,12 @@ wheels/
 # Virtual environments
 .venv
 
+# Linux kernel source + build artefacts (43 GB — regenerate with compile_linux.sh)
+data/linux/
+
+# Large generated CSVs (regenerate with: python src/build_callgraph.py + analyze_graph.py)
+data/out/edges.csv
+data/out/nodes.csv
+data/out/node_metrics.csv
+
 data/

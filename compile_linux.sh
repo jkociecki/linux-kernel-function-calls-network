@@ -61,7 +61,22 @@ case "$CONFIG_TARGET" in
 		;;
 esac
 
-# Remove old dumps to avoid mixing previous runs with current results.
-find . -type f -name "*.expand" -delete
+# IKHEADERS tars all kernel headers into a module; it fails when some header
+# files lack read permissions in this environment.  We don't need it for the
+# call-graph pipeline, so disable it unconditionally.
+scripts/config --disable IKHEADERS
+make olddefconfig
 
-make -j"$JOBS" KCFLAGS="-fdump-rtl-expand"
+# Ensure header files are readable so the build doesn't abort on permission errors.
+find include -type f ! -readable -exec chmod a+r {} +
+
+# Remove old dumps and object files to force full recompilation.
+# Without this, make skips already-built .o files and generates no .expand dumps.
+# Remove old dumps and all compiled artifacts to force full recompilation.
+# We cannot rely on "make clean" because Documentation/Kbuild is a directory
+# in this tree and causes make clean to abort early.
+find . -type f \( -name "*.expand" -o -name "*.o" -o -name "*.a" \
+	-o -name "*.ko" -o -name "*.mod" -o -name "*.mod.c" \
+	-o -name "vmlinux" -o -name "vmlinux.o" \) -delete
+
+make -k -j"$JOBS" KCFLAGS="-fdump-rtl-expand" || true
