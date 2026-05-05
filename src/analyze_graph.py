@@ -111,7 +111,9 @@ def write_top_hubs_csv(
 
     with out_path.open("w", encoding="utf-8", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["rank", "id", "subsystem", "in_degree", "out_degree", "pagerank"])
+        writer.writerow(
+            ["rank", "id", "subsystem", "in_degree", "out_degree", "pagerank"]
+        )
         for idx, node_id in enumerate(ranked[:top_k], start=1):
             attrs = graph.nodes[node_id]
             m = metrics[node_id]
@@ -146,11 +148,21 @@ def write_subsystem_stats_csv(out_path: Path, graph: nx.DiGraph) -> None:
             edge_outgoing[src_sub] = edge_outgoing.get(src_sub, 0) + 1
             edge_incoming[dst_sub] = edge_incoming.get(dst_sub, 0) + 1
 
-    subsystems = sorted(set(node_count) | set(edge_internal) | set(edge_outgoing) | set(edge_incoming))
+    subsystems = sorted(
+        set(node_count) | set(edge_internal) | set(edge_outgoing) | set(edge_incoming)
+    )
 
     with out_path.open("w", encoding="utf-8", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["subsystem", "nodes", "internal_edges", "outgoing_cross_edges", "incoming_cross_edges"])
+        writer.writerow(
+            [
+                "subsystem",
+                "nodes",
+                "internal_edges",
+                "outgoing_cross_edges",
+                "incoming_cross_edges",
+            ]
+        )
         for subsystem in subsystems:
             writer.writerow(
                 [
