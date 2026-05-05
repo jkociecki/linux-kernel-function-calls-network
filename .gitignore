@@ -18,3 +18,4 @@ data/out/nodes.csv
 data/out/node_metrics.csv
 
 data
+clean.py
